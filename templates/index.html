@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <style type='text/css'>
+      textarea {
+        width: 800px;
+        height: 500px;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <form method='post' action='/graphql'>
+      <textarea name='query'>query {
+  stocks {
+    symbol
+  }
+}
+      </textarea>
+      <input type='submit' value='post query' />
+    </form>
+  </body>
+</html>
