@@ -45,9 +45,13 @@ class Security(graphene.ObjectType):
 
 class Query(graphene.ObjectType):
     securities = graphene.List(Security)
+    hello = graphene.String()
 
     def resolve_securities(self, info):
         return [Security(**attrs) for attrs in SECURITIES]
+
+    def resolve_hello(self, info):
+        return "Hello Ryan"
 
 
 schema = graphene.Schema(query=Query)
