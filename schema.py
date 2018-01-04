@@ -33,7 +33,6 @@ class Security(graphene.ObjectType):
     price = graphene.Float()
 
     def resolve_positions(self, info):
-        print(self.positions[0])
         return [Position(**attrs) for attrs in self.positions]
 
     def resolve_market_value(self, info):

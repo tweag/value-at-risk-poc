@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, jsonify, request, render_template
 from create_securities import SECURITIES
 from schema import schema
