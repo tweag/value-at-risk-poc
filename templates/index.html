@@ -12,12 +12,16 @@
     <form method='post' action='/graphql'>
       <textarea name='query'>query {
   securities {
-    symbol,
-    price,
-    quantity,
-    marketValue,
-    originalPrice,
+    symbol
+    price
+    quantity
+    marketValue
+    originalPrice
     costBasis
+    positions {
+      originalPrice
+      quantity
+    }
   }
 }
       </textarea>
