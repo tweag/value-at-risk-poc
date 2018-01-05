@@ -9,8 +9,8 @@
     </style>
   </head>
   <body>
-    <form method='post' action='/graphql'>
-      <textarea name='query'>query {
+    <form id='graphql_form' method='post'>
+      <textarea id='graphql_query' name='query'>query {
   securities {
     symbol
     price
@@ -27,5 +27,40 @@
       </textarea>
       <input type='submit' value='post query' />
     </form>
+    <pre id='display'>
+    </pre>
+    <script>
+      var form = document.getElementById('graphql_form')
+      var query = document.getElementById('graphql_query')
+      var display = document.getElementById('display')
+
+      form.onsubmit = function (e) {
+        e.preventDefault()
+
+        var payload = { query: query.value }
+        var headers = new Headers({
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept': 'application/json'
+        })
+
+        var request = new Request(
+          '/graphql',
+          {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            headers: headers
+          }
+        )
+        fetch(request)
+          .then(response => response.json())
+          .then(data => {
+            display.innerHTML = JSON.stringify(data, null, 2)
+          })
+          .catch(console.log)
+
+        return false
+      }
+
+    </script>
   </body>
 </html>
