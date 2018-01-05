@@ -1,11 +1,12 @@
 import os
 
 from flask import Flask, jsonify, request, render_template
+from flask_cors import CORS, cross_origin
 from create_securities import SECURITIES
 from schema import schema
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route('/')
 def index():
