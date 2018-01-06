@@ -36,19 +36,21 @@ def create_positions(symbol):
 
     return positions
 
-
 def create_security(id):
     symbol = create_symbol()
     positions = create_positions(symbol)
-    quantity = randint(50, 400)
-    original_price = uniform(20, 200)
-    price = original_price * (uniform(.8, 1.4))
+    quantity = 0
+    cost_basis = 0
+    for position in positions:
+        quantity += position['quantity']
+        cost_basis += position['original_price'] * position['quantity']
+    price = positions[-1]['original_price'] * (uniform(.8, 1.4))
     return {
         'id': id,
         'symbol': symbol,
         'price': price,
+        'cost_basis': cost_basis,
         'quantity': quantity,
-        'original_price': original_price,
         'positions': positions,
     }
 

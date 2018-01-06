@@ -6,8 +6,6 @@ from create_securities import SECURITIES
 class Stock(graphene.Interface):
     symbol = graphene.String()
     quantity = graphene.Float()
-    market_value = graphene.Float()
-    original_price = graphene.Float()
     cost_basis = graphene.Float()
 
 
@@ -16,6 +14,7 @@ class Position(graphene.ObjectType):
         interfaces = (Stock, )
 
     aquired = graphene.String()
+    original_price = graphene.Float()
 
     def resolve_market_value(self, info):
         return self.price * self.quantity
@@ -30,6 +29,7 @@ class Security(graphene.ObjectType):
 
     id = graphene.Int()
     positions = graphene.List(Position)
+    market_value = graphene.Float()
     price = graphene.Float()
 
     def resolve_positions(self, info):
@@ -37,9 +37,6 @@ class Security(graphene.ObjectType):
 
     def resolve_market_value(self, info):
         return self.price * self.quantity
-
-    def resolve_cost_basis(self, info):
-        return self.original_price * self.quantity
 
 
 class Query(graphene.ObjectType):
