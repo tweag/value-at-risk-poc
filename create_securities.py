@@ -55,4 +55,4 @@ def create_security(id):
 def create_securities(number):
   return [create_security(n) for n in range(number)]
 
-SECURITIES = create_securities(200)
+SECURITIES = create_securities(1000)

@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
+from flask_graphql import GraphQLView
 
 from create_securities import SECURITIES
 from schema import schema
@@ -15,12 +16,10 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/graphql', methods=['POST'])
-def graphql():
-    query = request.json['query']
-    res = schema.execute(query)
-    return jsonify(res.data)
-
+app.add_url_rule(
+    '/graphql',
+    view_func=GraphQLView.as_view('graphql', schema=schema, graphiql=True)
+)
 
 @app.route('/json')
 def json():
