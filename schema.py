@@ -27,7 +27,7 @@ class Security(graphene.ObjectType):
     class Meta:
         interfaces = (Stock, )
 
-    id = graphene.Int()
+    id = graphene.ID()
     positions = graphene.List(Position)
     market_value = graphene.Float()
     price = graphene.Float()
@@ -41,10 +41,14 @@ class Security(graphene.ObjectType):
 
 class Query(graphene.ObjectType):
     securities = graphene.List(Security)
+    security = graphene.Field(Security, id=graphene.ID())
     hello = graphene.String()
 
     def resolve_securities(self, info):
         return [Security(**attrs) for attrs in SECURITIES]
+
+    def resolve_security(self, info, id):
+        return Security(**SECURITIES[int(id)])
 
     def resolve_hello(self, info):
         return "Hello Ryan"
