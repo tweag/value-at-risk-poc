@@ -41,14 +41,15 @@ class Security(graphene.ObjectType):
         return self.price * self.quantity
 
 
+security_models = [Security(**attrs) for attrs in SECURITIES]
+
 class Query(graphene.ObjectType):
     securities = graphene.List(Security)
     security = graphene.Field(Security, id=graphene.ID())
     hello = graphene.String()
 
     def resolve_securities(self, info):
-        return [Security(**attrs) for attrs in SECURITIES]
-
+        return security_models
     def resolve_security(self, info, id):
         return Security(**SECURITIES[int(id)])
 
