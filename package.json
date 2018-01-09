@@ -2,7 +2,8 @@
   "name": "poc_server",
   "scripts": {
     "build": "cd assets && yarn && yarn build",
-    "postinstall": "yarn build"
+    "postinstall": "yarn build",
+    "serve": "cd assets && yarn serve"
   },
   "devDependencies": {
     "yarn": "^1.3.2"
