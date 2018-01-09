@@ -8,7 +8,7 @@ from create_securities import SECURITIES
 from schema import schema
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="", static_folder="assets/dist/")
 CORS(app)
 
 @app.route('/')
