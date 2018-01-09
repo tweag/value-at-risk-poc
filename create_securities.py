@@ -16,7 +16,7 @@ def create_positions(symbol):
     day = 60 * 60 * 24
     now = time.time()
     positions = []
-    acquire_date = time.time() - randint(day, day * 365)
+    acquire_date = time.time() - randint(day * 200, day * 365)
     price = uniform(10, 50)
     while acquire_date < now:
         large_position = randint(0, 10) < 2
@@ -31,8 +31,8 @@ def create_positions(symbol):
             'quantity': quantity,
             'original_price': price,
         })
-        price *= uniform(0.98, 1.1)
-        acquire_date += randint(day, day*15)
+        price *= uniform(0.98, 1.03)
+        acquire_date += randint(day, day*10)
 
     return positions
 
@@ -59,4 +59,4 @@ def create_security(id):
 def create_securities(number):
   return [create_security(n) for n in range(number)]
 
-SECURITIES = create_securities(1000)
+SECURITIES = create_securities(500)
