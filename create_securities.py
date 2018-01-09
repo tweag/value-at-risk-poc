@@ -27,7 +27,7 @@ def create_positions(symbol):
 
         positions.append({
             'symbol': symbol,
-            'aquired': acquire_date,
+            'acquired': acquire_date,
             'quantity': quantity,
             'original_price': price,
         })
@@ -45,6 +45,8 @@ def create_security(id):
         quantity += position['quantity']
         cost_basis += position['original_price'] * position['quantity']
     price = positions[-1]['original_price'] * (uniform(.8, 1.4))
+    for position in positions:
+        position['price'] = price
     return {
         'id': id,
         'symbol': symbol,

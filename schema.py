@@ -13,8 +13,10 @@ class Position(graphene.ObjectType):
     class Meta:
         interfaces = (Stock, )
 
-    aquired = graphene.String()
+    acquired = graphene.String()
     original_price = graphene.Float()
+    price = graphene.Float()
+    market_value = graphene.Float()
 
     def resolve_market_value(self, info):
         return self.price * self.quantity
