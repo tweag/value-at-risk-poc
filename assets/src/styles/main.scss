@@ -1,7 +1,15 @@
+@import 'colors';
 @import 'tables';
+@import 'menu';
 
 body {
   font-family: 'Helvetica', 'Arial', sans-serif;
   font-size: 12px;
+  margin: 0;
 }
 
+.content {
+  margin: 1em auto;
+  padding: 0 1em;
+  max-width: 1200px;
+}

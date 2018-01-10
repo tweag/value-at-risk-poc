@@ -1,21 +1,27 @@
 table {
-  border: 1px solid #ddd;
-  font-size: 13px;
+  border: 1px solid $neutral-light;
+  font-size: .8rem;
+  line-height: 1.4em;
   text-align:right;
   width: 100%;
   border-collapse: collapse;
 
   thead {
-    background-color: #eee;
+    background-color: $neutral-dark;
+    color: $neutral-light;
+    tr th {
+      padding: .5em;
+      font-weight: normal;
+    }
   }
 
   tr {
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid $neutral-light;
   }
 
   th,
   td {
-    padding: .2em;
+    padding: .3em;
   }
 
   td.description,
@@ -44,6 +50,7 @@ tr.security {
   }
 
   &.open {
+    border-bottom: 1px solid $neutral-medium;
     td {
       font-weight: bold;
     }
@@ -54,21 +61,23 @@ tr.security {
 }
 
 tr.position {
-  background-color: #d7e8ef;
+  background-color: $primary-light;
   border-style: none;
-
+  border-left: 1px solid $neutral-medium;
+  border-right: 1px solid $neutral-medium;
 }
 
 tr.position + tr.security {
+  border-top: 1px solid $neutral-medium;
   td {
     padding: 1em .2em .2em;
   }
 }
 
 td.gain {
-  color: #1fa829;
+  color: $green;
 }
 
 td.loss {
-  color: #dd0b00;
+  color: $red;
 }

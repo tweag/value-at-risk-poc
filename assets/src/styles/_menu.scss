@@ -1,0 +1,37 @@
+.menu {
+  border-bottom: 1px solid $neutral-light;
+  box-shadow: 0px 1px 4px $neutral-light;
+  display:flex;
+  align-items: baseline;
+  font-size: 1rem;
+  padding: .5em;
+  color: $neutral-medium-dark;
+
+  .logo {
+    flex-grow: 1;
+    span {
+      font-size: 1.3em;
+    }
+  }
+
+  .date {
+    flex-grow: 3;
+    span {
+      padding: .5em;
+      font-size: .8em;
+      border-radius: .5em;
+      background-color: $neutral-light;
+    }
+  }
+
+  ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      padding: 0 .5em;
+    }
+  }
+}
