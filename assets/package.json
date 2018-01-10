@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "parcel": "parcel static/index.html",
-    "build": "webpack",
+    "build": "NODE_ENV=production webpack --config webpack.production.config.js",
+    "build:watch": "webpack --watch",
     "serve": "webpack-dev-server --debug --devtool source-map --output-pathinfo"
   },
   "dependencies": {

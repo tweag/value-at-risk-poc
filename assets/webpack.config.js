@@ -1,5 +1,4 @@
 const path = require('path')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -8,9 +7,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   devtool: 'source-map',
-  plugins: [
-    new UglifyJsPlugin()
-  ],
   module: {
     rules: [
       {
