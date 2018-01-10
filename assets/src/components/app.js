@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 
 import SecurityTable from './security_table'
-import classes from '../main.scss'
+
+import classes from '../styles/main.scss'
 
 class App extends Component {
   render () {
