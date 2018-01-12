@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import Menu from './menu'
 import SecurityTable from './security_table'
+import PositionsChart from './positions_chart'
 
 import classes from '../styles/main.scss'
 
