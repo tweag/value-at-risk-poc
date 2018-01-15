@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PositionRows from './position_rows'
+import ProfitLossRow from './profit_loss_row'
 
 export const SecurityHeader = () => (
     <tr className='security'>
@@ -44,8 +44,7 @@ export class SecurityRow extends Component {
           { `\$${profitLoss.toFixed(2)}` }
         </td>
       </tr>,
-      open ? <PositionRows key='positions' id={ id } /> : null
+      open ? <ProfitLossRow key='positions' id={ id } /> : null
     ]
   }
 }
-
