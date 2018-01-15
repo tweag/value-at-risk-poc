@@ -38,8 +38,9 @@ export default graphql(gql`
       symbol
       price
       quantity
-      marketValue
       costBasis
+      marketValue
+      profitLoss
     }
   }
 `)(SecurityTable)

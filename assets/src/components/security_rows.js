@@ -8,7 +8,7 @@ export const SecurityHeader = () => (
       <th>Quantity</th>
       <th>Cost Basis</th>
       <th>Market Value</th>
-      <th>Gain/Loss</th>
+      <th>Profit/Loss</th>
     </tr>
 )
 
@@ -25,10 +25,9 @@ export class SecurityRow extends Component {
   }
 
   render () {
-    const { id, symbol, price, quantity, marketValue, costBasis } = this.props
+    const { id, symbol, price, quantity, marketValue, costBasis, profitLoss } = this.props
     const { open } = this.state
-    const gainLoss = marketValue - costBasis
-    const isGain = gainLoss > 0
+    const isGain = profitLoss > 0
 
     return [
       <tr
@@ -42,7 +41,7 @@ export class SecurityRow extends Component {
         <td>{ `\$${costBasis.toFixed(2)}` }</td>
         <td>{ `\$${marketValue.toFixed(2)}` }</td>
         <td className={ isGain ? 'gain' : 'loss'}>
-          { `\$${gainLoss.toFixed(2)}` }
+          { `\$${profitLoss.toFixed(2)}` }
         </td>
       </tr>,
       open ? <PositionRows key='positions' id={ id } /> : null
