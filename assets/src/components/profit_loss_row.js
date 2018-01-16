@@ -10,11 +10,7 @@ export class PLDay extends Component {
 
     return (
       <tr className='position'>
-        <td className='description'>{ `Date: ${acquiredDate}` }</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td colSpan={5} className='description'>{ `Date: ${acquiredDate}` }</td>
         <td className={ isGain ? 'gain' : 'loss'}>
           { `${(parseFloat(profitLoss)*100).toFixed(2)}%` }
         </td>
