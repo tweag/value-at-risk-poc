@@ -1,35 +1,43 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
-
-export class PLDay extends Component {
-  render () {
-    const { date, profitLoss } = this.props
-    const acquiredDate = new Date(date * 1000).toLocaleDateString()
-    const isGain = profitLoss > 0
-
-    return (
-      <tr className='position'>
-        <td colSpan={5} className='description'>{ `Date: ${acquiredDate}` }</td>
-        <td className={ isGain ? 'gain' : 'loss'}>
-          { `${(parseFloat(profitLoss)*100).toFixed(2)}%` }
-        </td>
-      </tr>
-    )
-  }
-}
+import { extent, histogram } from 'd3-array'
+import { VictoryAxis, VictoryChart, VictoryBar } from 'victory'
 
 class ProfitLossRow extends Component {
-  renderPosition (position) {
-    return <PLDay key={ position.date }{ ...position } />
-  }
 
   render () {
     const { data } = this.props
     if (data.loading) {
       return null
     }
-    return data.security.pldays.map(this.renderPosition)
+    const { security: { pldays } } = data
+
+    const profitLosses = pldays.map(day => parseFloat(day.profitLoss))
+    const sorted = profitLosses.sort((a,b) => (+a) - (+b))
+    const [min, max] = extent(profitLosses)
+    const numBuckets = (max - min) * 100 * 10 // buckets in increments of .1%
+    const hist = histogram().domain([min, max]).thresholds(numBuckets)(profitLosses)
+
+    return (
+      <tr className='position'>
+        <td colSpan={4}>
+          <VictoryChart domainPadding={20}>
+            <VictoryAxis
+              orientation="bottom"
+              tickValues={[min, 0, max]}
+              tickFormat={num => num == 0 ? '0%' : `${(num*100).toFixed(2)}%`}
+            />
+            <VictoryBar
+              data={hist}
+              x={t => t.x1}
+              y={t => t.length}
+              interpolation="step"
+            />
+          </VictoryChart>
+        </td>
+      </tr>
+    )
   }
 }
 
@@ -48,5 +56,3 @@ const PLDaysForSecurity = gql`
 const options = ({ id }) => ({ variables: { id } })
 
 export default graphql(PLDaysForSecurity, { options })(ProfitLossRow)
-
-
