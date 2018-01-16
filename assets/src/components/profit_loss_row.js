@@ -1,8 +1,18 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
-import { extent, histogram } from 'd3-array'
+import { extent, histogram, quantile } from 'd3-array'
 import { VictoryAxis, VictoryChart, VictoryBar } from 'victory'
+
+const VaR = ({ percentile, profitLosses }) => {
+  const profitLoss = quantile(profitLosses, percentile / 100.0)
+  return (
+    <td>
+      <p>{percentile}% VaR:</p>
+      <p>{(profitLoss * 100.0).toFixed(2)}%</p>
+    </td>
+  )
+}
 
 class ProfitLossRow extends Component {
 
@@ -36,6 +46,7 @@ class ProfitLossRow extends Component {
             />
           </VictoryChart>
         </td>
+        {[5, 1].map(percentile => <VaR key={percentile} profitLosses={profitLosses} percentile={percentile} />)}
       </tr>
     )
   }
