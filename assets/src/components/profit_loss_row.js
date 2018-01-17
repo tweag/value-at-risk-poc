@@ -25,7 +25,9 @@ class ProfitLossRow extends Component {
 
     const profitLosses = pldays.map(day => parseFloat(day.profitLoss))
     const sorted = profitLosses.sort((a,b) => (+a) - (+b))
-    const [min, max] = extent(profitLosses)
+    const [loss, profit] = extent(profitLosses)
+    const mag = Math.max(Math.abs(loss), Math.abs(profit))
+    const [min, max] = [-mag, mag]
     const numBuckets = (max - min) * 100 * 10 // buckets in increments of .1%
     const hist = histogram().domain([min, max]).thresholds(numBuckets)(profitLosses)
 
@@ -35,7 +37,7 @@ class ProfitLossRow extends Component {
           <VictoryChart domainPadding={20}>
             <VictoryAxis
               orientation="bottom"
-              tickValues={[min, 0, max]}
+              tickValues={[loss, 0, profit]}
               tickFormat={num => num == 0 ? '0%' : `${(num*100).toFixed(2)}%`}
             />
             <VictoryBar
