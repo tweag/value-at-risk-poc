@@ -1,4 +1,4 @@
-from random import random, randint, choice, uniform
+from random import random, randint, choice, gauss, uniform
 import string
 import time
 
@@ -44,15 +44,14 @@ def create_date_days_ago(days_ago):
     return now - days_ago * 60 * 60 * 24
 
 def create_security(id):
-    good_day = uniform(0.01, 0.02)
-    bad_day = uniform(-0.02, 0)
+    target = uniform(-0.02, 0.025)
     symbol = create_symbol()
     quantity = uniform(10, 150)
     original_price = uniform(10, 50)
     price = original_price
     pldays = []
     for i in range(BUSINESS_DAYS):
-        profit_loss = uniform(bad_day, good_day)
+        profit_loss = gauss(target, 0.0065)
         price *= (1 + profit_loss)
         pldays.append({
             'date': create_date_days_ago(BUSINESS_DAYS - i),
