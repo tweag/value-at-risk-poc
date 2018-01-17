@@ -4,12 +4,13 @@ import gql from 'graphql-tag'
 import { extent, histogram, quantile } from 'd3-array'
 import { VictoryAxis, VictoryChart, VictoryBar } from 'victory'
 
-const VaR = ({ percentile, profitLosses }) => {
+const VaR = ({ marketValue, percentile, profitLosses }) => {
   const profitLoss = quantile(profitLosses, percentile / 100.0)
+  const value = profitLoss * marketValue
   return (
     <td>
       <p>{percentile}% VaR:</p>
-      <p>{(profitLoss * 100.0).toFixed(2)}%</p>
+      <p className={ profitLoss > 0 ? 'gain' : 'loss' }>${(value).toFixed(2)}</p>
     </td>
   )
 }
@@ -21,7 +22,7 @@ class ProfitLossRow extends Component {
     if (data.loading) {
       return null
     }
-    const { security: { pldays } } = data
+    const { security: { pldays, marketValue } } = data
 
     const profitLosses = pldays.map(day => parseFloat(day.profitLoss))
     const sorted = profitLosses.sort((a,b) => (+a) - (+b))
@@ -48,7 +49,14 @@ class ProfitLossRow extends Component {
             />
           </VictoryChart>
         </td>
-        {[5, 1].map(percentile => <VaR key={percentile} profitLosses={profitLosses} percentile={percentile} />)}
+        {[5, 1].map(percentile => (
+          <VaR
+            key={percentile}
+            marketValue={marketValue}
+            profitLosses={profitLosses}
+            percentile={percentile}
+          />
+        ))}
       </tr>
     )
   }
@@ -58,6 +66,7 @@ class ProfitLossRow extends Component {
 const PLDaysForSecurity = gql`
   query PLDaysForSecurity($id: ID!) {
     security(id: $id) {
+      marketValue
       pldays {
         date
         profitLoss
