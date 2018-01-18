@@ -10,6 +10,8 @@ class PLDay(graphene.ObjectType):
 
 class Security(graphene.ObjectType):
     id = graphene.ID()
+    book = graphene.String()
+    region = graphene.String()
     symbol = graphene.String()
     quantity = graphene.Float()
     original_price = graphene.Float()
@@ -32,7 +34,7 @@ class Security(graphene.ObjectType):
         return self.resolve_market_value(info) - self.resolve_cost_basis(info)
 
 
-security_models = [Security(**attrs) for attrs in SECURITIES]
+security_models = [Security(**attrs) for attrs in SECURITIES.values()]
 
 class Query(graphene.ObjectType):
     securities = graphene.List(Security)
@@ -42,7 +44,8 @@ class Query(graphene.ObjectType):
     def resolve_securities(self, info):
         return security_models
     def resolve_security(self, info, id):
-        return Security(**SECURITIES[int(id)])
+        if id in SECURITIES:
+            return Security(**SECURITIES[id])
 
     def resolve_hello(self, info):
         return "Hello Ryan"

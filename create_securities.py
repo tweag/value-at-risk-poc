@@ -1,4 +1,5 @@
 from random import random, randint, choice, gauss, uniform
+from uuid import uuid4
 import string
 import time
 
@@ -43,7 +44,9 @@ def create_date_days_ago(days_ago):
     now = time.time()
     return now - days_ago * 60 * 60 * 24
 
-def create_security(id):
+def create_security(book):
+    id = str(uuid4())
+    region = choice(REGIONS)
     target = uniform(-0.02, 0.025)
     symbol = create_symbol()
     quantity = uniform(10, 150)
@@ -58,16 +61,24 @@ def create_security(id):
             'profit_loss': profit_loss
         })
 
-    return {
+    return (id, {
         'id': id,
+        'book': book,
+        'region': region,
         'symbol': symbol,
         'quantity': quantity,
         'original_price': original_price,
         'price': price,
         'pldays': pldays,
-    }
+    })
+
 
 def create_securities(number):
-  return [create_security(n) for n in range(number)]
+    return dict([create_security(book) for _ in range(number) for book in BOOKS])
 
-SECURITIES = create_securities(500)
+
+MANAGERS = ['JG', 'RH', 'PS']
+TYPES = ['EM', 'CSArb']
+BOOKS = [(manager + '-' + type_) for manager in MANAGERS for type_ in TYPES]
+REGIONS = ['east', 'west', 'northeast', 'southeast', 'northwest', 'southwest']
+SECURITIES = create_securities(50)
