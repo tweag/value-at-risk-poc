@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import { extent, histogram, quantile } from 'd3-array'
-import { VictoryAxis, VictoryChart, VictoryBar } from 'victory'
+import { VictoryAxis, VictoryChart, VictoryBar, VictoryTheme } from 'victory'
 
 const VaR = ({ marketValue, percentile, profitLosses }) => {
   const profitLoss = quantile(profitLosses, percentile / 100.0)
@@ -28,18 +28,20 @@ class ProfitLossRow extends Component {
     const sorted = profitLosses.sort((a,b) => (+a) - (+b))
     const [loss, profit] = extent(profitLosses)
     const mag = Math.max(Math.abs(loss), Math.abs(profit))
-    const [min, max] = [-mag, mag]
+    const [min, max] = [-0.04, 0.04]
     const numBuckets = (max - min) * 100 * 10 // buckets in increments of .1%
     const hist = histogram().domain([min, max]).thresholds(numBuckets)(profitLosses)
+    const percentProfitLoss = quantile(profitLosses, 5 / 100.0)
 
     return (
       <tr className='position'>
         <td colSpan={4}>
-          <VictoryChart domainPadding={20}>
+          <VictoryChart domainPadding={20} width={800} theme={VictoryTheme.material}>
             <VictoryAxis
+              crossAxis
               orientation="bottom"
-              tickValues={[loss, 0, profit]}
-              tickFormat={num => num == 0 ? '0%' : `${(num*100).toFixed(2)}%`}
+              tickCount={11}
+              tickFormat={num => num == 0 ? '0%' : `${(num*100).toFixed(0)}%`}
             />
             <VictoryBar
               data={hist}
