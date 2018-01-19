@@ -1,6 +1,6 @@
 import graphene
 
-from create_securities import SECURITIES
+from create_securities import SECURITIES, BOOKS, BOOK_INDEX, REGIONS, REGION_INDEX
 
 
 class PLDay(graphene.ObjectType):
@@ -36,16 +36,43 @@ class Security(graphene.ObjectType):
 
 security_models = [Security(**attrs) for attrs in SECURITIES.values()]
 
+class Book(graphene.ObjectType):
+    name = graphene.String()
+    securities = graphene.List(Security)
+
+    def resolve_securities(self, info):
+        security_ids = BOOK_INDEX[self.name]
+        return [s for s in security_models if s.id in security_ids]
+
+
+class Region(graphene.ObjectType):
+    name = graphene.String()
+    securities = graphene.List(Security)
+
+    def resolve_securities(self, info):
+        security_ids = REGION_INDEX[self.name]
+        return [s for s in security_models if s.id in security_ids]
+
+
 class Query(graphene.ObjectType):
     securities = graphene.List(Security)
     security = graphene.Field(Security, id=graphene.ID())
+    books = graphene.List(Book)
+    regions = graphene.List(Region)
     hello = graphene.String()
 
     def resolve_securities(self, info):
         return security_models
+
     def resolve_security(self, info, id):
         if id in SECURITIES:
             return Security(**SECURITIES[id])
+
+    def resolve_books(self, info):
+        return [Book(name=book) for book in BOOKS]
+
+    def resolve_regions(self, info):
+        return [Region(name=region) for region in REGIONS]
 
     def resolve_hello(self, info):
         return "Hello Ryan"

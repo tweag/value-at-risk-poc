@@ -1,3 +1,4 @@
+from collections import defaultdict
 from random import random, randint, choice, gauss, uniform
 from uuid import uuid4
 import string
@@ -77,8 +78,18 @@ def create_securities(number):
     return dict([create_security(book) for _ in range(number) for book in BOOKS])
 
 
+def create_index(securities, key):
+    result = defaultdict(list)
+    for security in securities.values():
+        result[security[key]].append(security['id'])
+    return result
+
+
+
 MANAGERS = ['JG', 'RH', 'PS']
 TYPES = ['EM', 'CSArb']
 BOOKS = [(manager + '-' + type_) for manager in MANAGERS for type_ in TYPES]
 REGIONS = ['east', 'west', 'northeast', 'southeast', 'northwest', 'southwest']
 SECURITIES = create_securities(50)
+BOOK_INDEX = create_index(SECURITIES, 'book')
+REGION_INDEX = create_index(SECURITIES, 'region')
