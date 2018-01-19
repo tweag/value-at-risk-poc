@@ -89,7 +89,7 @@ def create_index(securities, key):
 MANAGERS = ['JG', 'RH', 'PS']
 TYPES = ['EM', 'CSArb']
 BOOKS = [(manager + '-' + type_) for manager in MANAGERS for type_ in TYPES]
-REGIONS = ['east', 'west', 'northeast', 'southeast', 'northwest', 'southwest']
+REGIONS = ['APAC', 'EMEA', 'LATAM', 'NAMER']
 SECURITIES = create_securities(50)
 BOOK_INDEX = create_index(SECURITIES, 'book')
 REGION_INDEX = create_index(SECURITIES, 'region')
