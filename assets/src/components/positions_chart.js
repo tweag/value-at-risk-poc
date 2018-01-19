@@ -17,7 +17,7 @@ class PositionsChart extends Component {
         x: position.acquired,
         y: totalQuantity,
       }
-    }
+    })
 
     return (
       <div>
