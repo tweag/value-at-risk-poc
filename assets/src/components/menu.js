@@ -27,8 +27,8 @@ const Logo = () => {
 const MenuItems = () => {
   return (
     <ul>
-      <li><a>Settings</a></li>
-      <li><a>Account</a></li>
+      <li><a href='/graphql'>Queries</a></li>
+      <li><a href='/embed_charts'>Charts</a></li>
     </ul>
   )
 }
