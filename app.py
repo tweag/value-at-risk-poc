@@ -15,6 +15,9 @@ CORS(app)
 def index():
     return render_template('index.html')
 
+@app.route('/embed_charts')
+def embed_charts():
+    return render_template('embed_charts.html')
 
 app.add_url_rule(
     '/graphql',
