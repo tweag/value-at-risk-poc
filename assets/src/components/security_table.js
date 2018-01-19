@@ -41,6 +41,7 @@ export default graphql(gql`
       costBasis
       marketValue
       profitLoss
+      valueAtRisk
     }
   }
 `)(SecurityTable)

@@ -20,6 +20,7 @@ class Security(graphene.ObjectType):
     market_value = graphene.Float()
     profit_loss = graphene.Float()
     pldays = graphene.List(PLDay)
+    value_at_risk = graphene.Float()
 
     def resolve_pldays(self, info):
         return [PLDay(**attrs) for attrs in self.pldays]

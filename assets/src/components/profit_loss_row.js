@@ -4,17 +4,6 @@ import gql from 'graphql-tag'
 import { extent, histogram, quantile } from 'd3-array'
 import { VictoryAxis, VictoryChart, VictoryBar, VictoryTheme } from 'victory'
 
-const VaR = ({ marketValue, percentile, profitLosses }) => {
-  const profitLoss = quantile(profitLosses, percentile / 100.0)
-  const value = profitLoss * marketValue
-  return (
-    <td>
-      <p>{percentile}% VaR:</p>
-      <p className={ profitLoss > 0 ? 'gain' : 'loss' }>${(value).toFixed(2)}</p>
-    </td>
-  )
-}
-
 class ProfitLossRow extends Component {
 
   render () {
@@ -35,7 +24,7 @@ class ProfitLossRow extends Component {
 
     return (
       <tr className='position'>
-        <td colSpan={4}>
+        <td colSpan={7}>
           <VictoryChart domainPadding={20} width={800} theme={VictoryTheme.material}>
             <VictoryAxis
               crossAxis
@@ -51,14 +40,6 @@ class ProfitLossRow extends Component {
             />
           </VictoryChart>
         </td>
-        {[5, 1].map(percentile => (
-          <VaR
-            key={percentile}
-            marketValue={marketValue}
-            profitLosses={profitLosses}
-            percentile={percentile}
-          />
-        ))}
       </tr>
     )
   }
