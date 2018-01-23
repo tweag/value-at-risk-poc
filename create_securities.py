@@ -48,10 +48,10 @@ def create_date_days_ago(days_ago):
 def create_security(book):
     id = str(uuid4())
     region = choice(REGIONS)
-    target = uniform(-0.02, 0.025)
+    target = uniform(-0.01, 0.012)
     symbol = create_symbol()
     quantity = uniform(10, 150)
-    original_price = uniform(10, 50)
+    original_price = uniform(5, 25)
     price = original_price
     pldays = []
     for i in range(BUSINESS_DAYS):
