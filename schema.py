@@ -1,11 +1,16 @@
 import graphene
 
-from create_securities import SECURITIES, BOOKS, BOOK_INDEX, REGIONS, REGION_INDEX
+from create_securities import (
+    calc_cost_basis, calc_market_value, calc_profit_loss,
+    calc_value_at_risk_securities,
+    SECURITIES, BOOKS, BOOK_INDEX, REGIONS, REGION_INDEX
+)
 
 
 class PLDay(graphene.ObjectType):
     date = graphene.String()
     profit_loss = graphene.String()
+    profit_loss_value = graphene.String()
 
 
 class Security(graphene.ObjectType):
@@ -37,22 +42,67 @@ class Security(graphene.ObjectType):
 
 security_models = [Security(**attrs) for attrs in SECURITIES.values()]
 
-class Book(graphene.ObjectType):
-    name = graphene.String()
+class SecurityGroup(graphene.AbstractType):
     securities = graphene.List(Security)
+    cost_basis = graphene.Float()
+    market_value = graphene.Float()
+    profit_loss = graphene.Float()
+    value_at_risk_1 = graphene.Float()
+    value_at_risk_5 = graphene.Float()
+
+    def resolve_cost_basis(self, info):
+        return calc_cost_basis(self.security_ids())
+
+    def resolve_market_value(self, info):
+        return calc_market_value(self.security_ids())
+
+    def resolve_profit_loss(self, info):
+        return calc_profit_loss(self.security_ids())
 
     def resolve_securities(self, info):
-        security_ids = BOOK_INDEX[self.name]
+        security_ids = self.security_ids()
         return [s for s in security_models if s.id in security_ids]
 
+    def resolve_value_at_risk_1(self, info):
+        return calc_value_at_risk_securities(self.security_ids(),  0.01)
 
-class Region(graphene.ObjectType):
+    def resolve_value_at_risk_5(self, info):
+        return calc_value_at_risk_securities(self.security_ids(),  0.05)
+
+
+class BookRegion(graphene.ObjectType, SecurityGroup):
+    region_name = graphene.String()
+    book_name = graphene.String()
     name = graphene.String()
-    securities = graphene.List(Security)
 
-    def resolve_securities(self, info):
-        security_ids = REGION_INDEX[self.name]
-        return [s for s in security_models if s.id in security_ids]
+    def security_ids(self):
+        return set(BOOK_INDEX[self.book_name]).intersection(REGION_INDEX[self.region_name])
+
+
+class Book(graphene.ObjectType, SecurityGroup):
+    name = graphene.String()
+    regions = graphene.List(BookRegion)
+
+    def security_ids(self):
+        return BOOK_INDEX[self.name]
+
+    def resolve_regions(self, info):
+        securities = [s for s in security_models if s.id in self.security_ids()]
+        region_names = set([s.region for s in securities])
+        return [BookRegion(name=region_name, book_name=self.name, region_name=region_name) for region_name in region_names]
+
+
+class Region(graphene.ObjectType, SecurityGroup):
+    name = graphene.String()
+    books = graphene.List(BookRegion)
+
+    def security_ids(self):
+        return REGION_INDEX[self.name]
+
+    def resolve_books(self, info):
+        securities = [s for s in security_models if s.id in self.security_ids()]
+        book_names = set([s.book for s in securities])
+        return [BookRegion(name=book_name, region_name=self.name, book_name=book_name) for book_name in book_names]
 
 
 class Query(graphene.ObjectType):

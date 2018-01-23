@@ -56,10 +56,12 @@ def create_security(book):
     pldays = []
     for i in range(BUSINESS_DAYS):
         profit_loss = gauss(target, 0.0065)
-        price *= (1 + profit_loss)
+        profit_loss_value = price * profit_loss
+        price += profit_loss_value
         pldays.append({
             'date': create_date_days_ago(BUSINESS_DAYS - i),
-            'profit_loss': profit_loss
+            'profit_loss': profit_loss,
+            'profit_loss_value': profit_loss_value,
         })
 
     value_at_risk = sorted(
@@ -90,8 +92,35 @@ def create_index(securities, key):
     return result
 
 
+def calc_cost_basis(security_ids):
+    return sum([
+        SECURITIES[id]['original_price'] * SECURITIES[id]['quantity']
+        for id in security_ids
+    ])
 
-MANAGERS = ['JG', 'RH', 'PS']
+def calc_market_value(security_ids):
+    return sum([
+        SECURITIES[id]['price'] * SECURITIES[id]['quantity']
+        for id in security_ids
+    ])
+
+def calc_profit_loss(security_ids):
+    return calc_market_value(security_ids) - calc_cost_basis(security_ids)
+
+def zip_pldays(security_ids):
+    result = defaultdict(int)
+    for id in security_ids:
+        quantity = SECURITIES[id]['quantity']
+        for index, plday in enumerate(SECURITIES[id]['pldays']):
+            result[index] += plday['profit_loss_value'] * quantity
+    return result.values()
+
+def calc_value_at_risk_securities(security_ids, percentage):
+    pldays = zip_pldays(security_ids)
+    value_at_risk = sorted(pldays)[int(len(pldays) * percentage)]
+    return value_at_risk
+
+MANAGERS = ['JG', 'RH', 'PS', 'DM', 'TF', 'CR', 'TC', 'RZ', 'AB', 'GS', 'MN']
 TYPES = ['EM', 'CSArb']
 BOOKS = [(manager + '-' + type_) for manager in MANAGERS for type_ in TYPES]
 REGIONS = ['APAC', 'EMEA', 'LATAM', 'NAMER']
