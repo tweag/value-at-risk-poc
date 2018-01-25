@@ -35,14 +35,14 @@ table {
   }
 }
 
-tr.security {
+tr {
   // 7 columns
   th {
-    width: 12%;
+    width: 10%;
   }
 
   th.description {
-    width: 30%;
+    width: 20%;
   }
 
   td.description::before {

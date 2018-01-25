@@ -4,8 +4,7 @@ import gql from 'graphql-tag'
 import { extent, histogram, quantile } from 'd3-array'
 import { VictoryAxis, VictoryChart, VictoryBar, VictoryTheme } from 'victory'
 
-class ProfitLossRow extends Component {
-
+class ProfitLossChart extends Component {
   render () {
     const { data } = this.props
     if (data.loading) {
@@ -23,28 +22,23 @@ class ProfitLossRow extends Component {
     const percentProfitLoss = quantile(profitLosses, 5 / 100.0)
 
     return (
-      <tr className='position'>
-        <td colSpan={7}>
-          <VictoryChart domainPadding={20} width={800} theme={VictoryTheme.material}>
-            <VictoryAxis
-              crossAxis
-              orientation="bottom"
-              tickCount={11}
-              tickFormat={num => num == 0 ? '0%' : `${(num*100).toFixed(0)}%`}
-            />
-            <VictoryBar
-              data={hist}
-              x={t => t.x1}
-              y={t => t.length}
-              interpolation="step"
-            />
-          </VictoryChart>
-        </td>
-      </tr>
+      <VictoryChart domainPadding={20} width={800} theme={VictoryTheme.material}>
+        <VictoryAxis
+          crossAxis
+          orientation="bottom"
+          tickCount={11}
+          tickFormat={num => num == 0 ? '0%' : `${(num*100).toFixed(0)}%`}
+        />
+        <VictoryBar
+          data={hist}
+          x={t => t.x1}
+          y={t => t.length}
+          interpolation="step"
+        />
+      </VictoryChart>
     )
   }
 }
-
 
 const PLDaysForSecurity = gql`
   query PLDaysForSecurity($id: ID!) {
@@ -60,4 +54,5 @@ const PLDaysForSecurity = gql`
 
 const options = ({ id }) => ({ variables: { id } })
 
-export default graphql(PLDaysForSecurity, { options })(ProfitLossRow)
+export default graphql(PLDaysForSecurity, { options })(ProfitLossChart)
+

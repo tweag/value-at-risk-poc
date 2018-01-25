@@ -3,10 +3,11 @@ import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import { Table } from './table'
-import { SecurityHeader, SecurityRow } from './security_row'
+import { BookRow } from './book_row'
+import { SecurityHeader } from './security_row'
 
 
-class SecurityTable extends Component {
+class BookTable extends Component {
   renderHeader = () => {
     if (this.props.topLevel) {
       return <SecurityHeader />
@@ -14,32 +15,34 @@ class SecurityTable extends Component {
   }
 
   renderRow = (row) => {
-    return <SecurityRow key={ row.symbol } { ...row } />
+    return (
+      <BookRow
+        key={ row.name }
+        unnest={ this.props.unnest }
+        { ...row } />
+    )
   }
 
   render () {
-    const { data: { loading, securities } } = this.props
+    const { data: { loading, books } } = this.props
     if (loading) {
       return <div>Fetching...</div>
     }
 
     return (
       <Table
-        className='securities'
+        className='books'
         renderHeader={ this.renderHeader }
         renderRow={ this.renderRow }
-        rows={ securities } />
+        rows={ books } />
     )
   }
 }
 
 export default graphql(gql`
   query {
-    securities {
-      id
-      symbol
-      price
-      quantity
+    books {
+      name
       costBasis
       marketValue
       profitLoss
@@ -47,5 +50,5 @@ export default graphql(gql`
       valueAtRisk5
     }
   }
-`)(SecurityTable)
+`)(BookTable)
 

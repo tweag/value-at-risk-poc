@@ -64,7 +64,11 @@ def create_security(book):
             'profit_loss_value': profit_loss_value,
         })
 
-    value_at_risk = sorted(
+    value_at_risk_1 = sorted(
+        pldays, key=lambda plday: plday['profit_loss']
+    )[int(len(pldays) * 0.01)]['profit_loss'] * quantity * price
+
+    value_at_risk_5 = sorted(
         pldays, key=lambda plday: plday['profit_loss']
     )[int(len(pldays) * 0.05)]['profit_loss'] * quantity * price
 
@@ -77,7 +81,8 @@ def create_security(book):
         'original_price': original_price,
         'price': price,
         'pldays': pldays,
-        'value_at_risk': value_at_risk
+        'value_at_risk_1': value_at_risk_1,
+        'value_at_risk_5': value_at_risk_5
     })
 
 
