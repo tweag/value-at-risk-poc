@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 
 import Menu from './menu'
+import Nestable from './nestable'
+import BookTable from './book_table'
+import RegionTable from './region_table'
 import SecurityTable from './security_table'
-import PositionsChart from './positions_chart'
+import { SecurityHeader } from './security_row'
 
 import classes from '../styles/main.scss'
 
@@ -13,7 +16,21 @@ class App extends Component {
         <Menu />
         <div className='content'>
           <h1>Client X</h1>
-          <SecurityTable />
+          <table className='securities'>
+            <thead>
+              <SecurityHeader />
+            </thead>
+            <tbody>
+              <Nestable
+                topLevel
+                hierarchy={[
+                  BookTable,
+                  RegionTable,
+                  SecurityTable,
+                ]}
+              />
+            </tbody>
+          </table>
         </div>
       </div>
     )

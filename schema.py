@@ -25,7 +25,8 @@ class Security(graphene.ObjectType):
     market_value = graphene.Float()
     profit_loss = graphene.Float()
     pldays = graphene.List(PLDay)
-    value_at_risk = graphene.Float()
+    value_at_risk_5 = graphene.Float()
+    value_at_risk_1 = graphene.Float()
 
     def resolve_pldays(self, info):
         return [PLDay(**attrs) for attrs in self.pldays]
@@ -41,6 +42,7 @@ class Security(graphene.ObjectType):
 
 
 security_models = [Security(**attrs) for attrs in SECURITIES.values()]
+
 
 class SecurityGroup(graphene.AbstractType):
     securities = graphene.List(Security)
@@ -82,6 +84,7 @@ class BookRegion(graphene.ObjectType, SecurityGroup):
 class Book(graphene.ObjectType, SecurityGroup):
     name = graphene.String()
     regions = graphene.List(BookRegion)
+    region = graphene.Field(lambda: Region, name=graphene.String())
 
     def security_ids(self):
         return BOOK_INDEX[self.name]
@@ -91,10 +94,14 @@ class Book(graphene.ObjectType, SecurityGroup):
         region_names = set([s.region for s in securities])
         return [BookRegion(name=region_name, book_name=self.name, region_name=region_name) for region_name in region_names]
 
+    def resolve_region(self, info, name):
+        return BookRegion(name=name, book_name=self.name, region_name=name)
+
 
 class Region(graphene.ObjectType, SecurityGroup):
     name = graphene.String()
     books = graphene.List(BookRegion)
+    book = graphene.Field(Book, name=graphene.String())
 
     def security_ids(self):
         return REGION_INDEX[self.name]
@@ -104,12 +111,17 @@ class Region(graphene.ObjectType, SecurityGroup):
         book_names = set([s.book for s in securities])
         return [BookRegion(name=book_name, region_name=self.name, book_name=book_name) for book_name in book_names]
 
+    def resolve_book(self, info, name):
+        return BookRegion(name=name, book_name=name, region_name=self.name)
+
 
 class Query(graphene.ObjectType):
     securities = graphene.List(Security)
     security = graphene.Field(Security, id=graphene.ID())
     books = graphene.List(Book)
+    book = graphene.Field(Book, name=graphene.String())
     regions = graphene.List(Region)
+    region = graphene.Field(Region, name=graphene.String())
     hello = graphene.String()
 
     def resolve_securities(self, info):
@@ -122,8 +134,14 @@ class Query(graphene.ObjectType):
     def resolve_books(self, info):
         return [Book(name=book) for book in BOOKS]
 
+    def resolve_book(self, info, name):
+        return Book(name=name)
+
     def resolve_regions(self, info):
         return [Region(name=region) for region in REGIONS]
+
+    def resolve_region(self, info, name):
+        return Region(name=name)
 
     def resolve_hello(self, info):
         return "Hello Ryan"

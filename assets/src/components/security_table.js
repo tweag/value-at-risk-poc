@@ -2,46 +2,40 @@ import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
-import { Table } from './table'
-import { SecurityHeader, SecurityRow } from './security_rows'
+import { SecurityRow } from './security_row'
 
 
 class SecurityTable extends Component {
-  renderHeader = () => {
-    return <SecurityHeader />
-  }
-
   renderRow = (row) => {
     return <SecurityRow key={ row.symbol } { ...row } />
   }
 
   render () {
-    const { data: { loading, securities } } = this.props
+    const { data: { loading, book } } = this.props
     if (loading) {
-      return <div>Fetching...</div>
+      return <tr><td>Fetching...</td></tr>
     }
 
-    return (
-      <Table
-        className='securities'
-        renderHeader={ this.renderHeader }
-        renderRow={ this.renderRow }
-        rows={ securities } />
-    )
+    return book.region.securities.map(this.renderRow)
   }
 }
 
 export default graphql(gql`
-  query {
-    securities {
-      id
-      symbol
-      price
-      quantity
-      costBasis
-      marketValue
-      profitLoss
-      valueAtRisk
+  query ($bookName:String, $regionName:String) {
+    book(name:$bookName) {
+      region(name:$regionName) {
+        securities {
+          id
+          symbol
+          price
+          quantity
+          costBasis
+          marketValue
+          profitLoss
+          valueAtRisk1
+          valueAtRisk5
+        }
+      }
     }
   }
 `)(SecurityTable)
