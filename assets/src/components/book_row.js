@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import NestedTable from './nested_table'
 
 export class BookRow extends Component {
   constructor (props) {
@@ -34,7 +33,7 @@ export class BookRow extends Component {
         </td>
       </tr>,
       open
-        ? this.props.unnest({ bookName: name })
+        ? this.props.unnest({ bookName: name, key: 'unnest' })
         : null
     ]
   }

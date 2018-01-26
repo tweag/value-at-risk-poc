@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import ProfitLossChart from './profit_loss_chart'
-import NestedTable from './nested_table'
 
 export const SecurityHeader = () => (
     <tr className='header'>

@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
-import { Table } from './table'
-import { SecurityHeader, SecurityRow } from './security_row'
+import { SecurityRow } from './security_row'
 
 
 class SecurityTable extends Component {
@@ -12,27 +11,29 @@ class SecurityTable extends Component {
   }
 
   render () {
-    const { data: { loading, securities } } = this.props
+    const { data: { loading, book } } = this.props
     if (loading) {
-      return <div>Fetching...</div>
+      return <tr><td>Fetching...</td></tr>
     }
 
-    return securities.map(this.renderRow)
+    return book.securities.map(this.renderRow)
   }
 }
 
 export default graphql(gql`
-  query {
-    securities {
-      id
-      symbol
-      price
-      quantity
-      costBasis
-      marketValue
-      profitLoss
-      valueAtRisk1
-      valueAtRisk5
+  query ($bookName:String) {
+    book(name:$bookName) {
+      securities {
+        id
+        symbol
+        price
+        quantity
+        costBasis
+        marketValue
+        profitLoss
+        valueAtRisk1
+        valueAtRisk5
+      }
     }
   }
 `)(SecurityTable)
