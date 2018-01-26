@@ -57,7 +57,7 @@ def create_security(book):
     price = original_price
     pldays = []
     for i in range(BUSINESS_DAYS):
-        profit_loss = gauss(target, 0.0065)
+        profit_loss = gauss(target, 0.0165)
         profit_loss_value = price * profit_loss
         price += profit_loss_value
         pldays.append({
@@ -86,10 +86,6 @@ def create_security(book):
         'value_at_risk_1': value_at_risk_1,
         'value_at_risk_5': value_at_risk_5
     })
-
-
-def create_securities(number):
-    return dict([create_security(book) for _ in range(number) for book in BOOKS])
 
 
 def create_index(securities, key):
@@ -132,10 +128,14 @@ def calc_value_at_risk_securities(security_ids, percentage):
     return value_at_risk
 
 
+def create_securities(number):
+    return dict([create_security(book) for _ in range(number) for book in BOOKS])
+
+
 MANAGERS = ['JG', 'RH', 'PS', 'DM', 'TF', 'CR', 'TC', 'RZ', 'AB', 'GS', 'MN']
 TYPES = ['EM', 'CSArb']
 BOOKS = [(manager + '-' + type_) for manager in MANAGERS for type_ in TYPES]
 REGIONS = ['APAC', 'EMEA', 'LATAM', 'NAMER']
-SECURITIES = create_securities(50)
+SECURITIES = create_securities(300)
 BOOK_INDEX = create_index(SECURITIES, 'book')
 REGION_INDEX = create_index(SECURITIES, 'region')
