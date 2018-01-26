@@ -60,14 +60,14 @@ tr {
   }
 }
 
-tr.position {
+tr.security {
   background-color: $primary-light;
   border-style: none;
   border-left: 1px solid $neutral-medium;
   border-right: 1px solid $neutral-medium;
 }
 
-tr.position + tr.security {
+tr.book + tr.security {
   border-top: 1px solid $neutral-medium;
   td {
     padding: 1em .2em .2em;

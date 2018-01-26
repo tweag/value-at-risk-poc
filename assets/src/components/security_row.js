@@ -3,7 +3,7 @@ import ProfitLossChart from './profit_loss_chart'
 import NestedTable from './nested_table'
 
 export const SecurityHeader = () => (
-    <tr className='security'>
+    <tr className='header'>
       <th className='description'>Description</th>
       <th>Price</th>
       <th>Quantity</th>
@@ -49,11 +49,9 @@ export class SecurityRow extends Component {
           { `\$${profitLoss.toFixed(2)}` }
         </td>
       </tr>,
-      open ? (
-        <NestedTable key='positions' columns={8}>
-          <ProfitLossChart id={ id } />
-        </NestedTable>
-      ) : null
+      open
+        ? <ProfitLossChart id={ id } />
+        : null
     ]
   }
 }

@@ -7,12 +7,6 @@ import { SecurityHeader, SecurityRow } from './security_row'
 
 
 class SecurityTable extends Component {
-  renderHeader = () => {
-    if (this.props.topLevel) {
-      return <SecurityHeader />
-    }
-  }
-
   renderRow = (row) => {
     return <SecurityRow key={ row.symbol } { ...row } />
   }
@@ -23,13 +17,7 @@ class SecurityTable extends Component {
       return <div>Fetching...</div>
     }
 
-    return (
-      <Table
-        className='securities'
-        renderHeader={ this.renderHeader }
-        renderRow={ this.renderRow }
-        rows={ securities } />
-    )
+    return securities.map(this.renderRow)
   }
 }
 

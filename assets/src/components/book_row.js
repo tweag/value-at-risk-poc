@@ -20,7 +20,7 @@ export class BookRow extends Component {
       <tr
         key={ name }
         onClick={ this.toggleRow }
-        className={ open ? 'open security' : 'security' }
+        className={ open ? 'open book' : 'book' }
       >
         <td className='description'>{ name }</td>
         <td></td>
@@ -33,11 +33,9 @@ export class BookRow extends Component {
           { `\$${profitLoss.toFixed(2)}` }
         </td>
       </tr>,
-      open ? (
-        <NestedTable key='regions' columns={8}>
-          { this.props.unnest() }
-        </NestedTable>
-      ) : null
+      open
+        ? this.props.unnest({ bookName: name })
+        : null
     ]
   }
 }

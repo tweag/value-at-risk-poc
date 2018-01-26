@@ -8,12 +8,6 @@ import { SecurityHeader } from './security_row'
 
 
 class BookTable extends Component {
-  renderHeader = () => {
-    if (this.props.topLevel) {
-      return <SecurityHeader />
-    }
-  }
-
   renderRow = (row) => {
     return (
       <BookRow
@@ -29,13 +23,7 @@ class BookTable extends Component {
       return <div>Fetching...</div>
     }
 
-    return (
-      <Table
-        className='books'
-        renderHeader={ this.renderHeader }
-        renderRow={ this.renderRow }
-        rows={ books } />
-    )
+    return books.map(this.renderRow)
   }
 }
 
