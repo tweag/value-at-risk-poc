@@ -21,7 +21,7 @@ export class BookRow extends Component {
         onClick={ this.toggleRow }
         className={ open ? 'open book' : 'book' }
       >
-        <td className='description'>{ name }</td>
+        <td className='description'>BOOK: { name }</td>
         <td></td>
         <td></td>
         <td>{ `\$${valueAtRisk1.toFixed(2)}` }</td>

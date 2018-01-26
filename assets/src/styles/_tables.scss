@@ -60,8 +60,19 @@ tr {
   }
 }
 
-tr.region{
-  background-color: $neutral-medium;
+tr.region,
+tr.book {
+  td {
+    padding: .4em;
+  }
+
+  &.open {
+    padding: 1em .4em .4em;
+  }
+}
+
+tr.region {
+  background-color: $secondary-light;
   border-style: none;
   border-left: 1px solid $neutral-medium;
   border-right: 1px solid $neutral-medium;
@@ -74,12 +85,36 @@ tr.security {
   border-right: 1px solid $neutral-medium;
 }
 
-tr.book + tr.security {
+tr.book + tr.region {
   border-top: 1px solid $neutral-medium;
   td {
-    padding: 1em .2em .2em;
+    padding-top: 1em;
   }
 }
+
+tr.region + tr.book {
+  border-top: 1px solid $neutral-medium;
+  td {
+    padding-top: 1em;
+  }
+}
+
+table {
+  tr.region {
+    .description {
+      text-indent: 2em;
+    }
+  }
+}
+
+table {
+  tr.security {
+    .description {
+      text-indent: 3em;
+    }
+  }
+}
+
 
 .gain {
   color: $green;

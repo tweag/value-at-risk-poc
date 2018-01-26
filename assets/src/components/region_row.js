@@ -21,7 +21,7 @@ export class RegionRow extends Component {
         onClick={ this.toggleRow }
         className={ open ? 'open region' : 'region' }
       >
-        <td className='description'>{ name }</td>
+        <td className='description'>REGION: { name }</td>
         <td></td>
         <td></td>
         <td>{ `\$${valueAtRisk1.toFixed(2)}` }</td>
