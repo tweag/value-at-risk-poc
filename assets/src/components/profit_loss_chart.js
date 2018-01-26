@@ -16,10 +16,19 @@ class ProfitLossChart extends Component {
     const sorted = profitLosses.sort((a,b) => (+a) - (+b))
     const [loss, profit] = extent(profitLosses)
     const mag = Math.max(Math.abs(loss), Math.abs(profit))
-    const [min, max] = [-0.04, 0.04]
-    const numBuckets = (max - min) * 100 * 10 // buckets in increments of .1%
+    const [min, max] = [-0.07, 0.07]
+    const numBuckets = (max - min) * 100 * 4  // buckets in increments of some%
     const hist = histogram().domain([min, max]).thresholds(numBuckets)(profitLosses)
     const percentProfitLoss = quantile(profitLosses, 5 / 100.0)
+
+    const hist2 = hist.map(
+      arr => ({
+        len: arr.length,
+        start: arr.x0,
+        end: arr.x1,
+        average: (arr.x0 + arr.x1)/2
+      })
+    )
 
     return (
       <VictoryChart domainPadding={20} width={800} theme={VictoryTheme.material}>
@@ -30,9 +39,9 @@ class ProfitLossChart extends Component {
           tickFormat={num => num == 0 ? '0%' : `${(num*100).toFixed(0)}%`}
         />
         <VictoryBar
-          data={hist}
-          x={t => t.x1}
-          y={t => t.length}
+          data={hist2}
+          x={t => t.average}
+          y={t => t.len}
           interpolation="step"
         />
       </VictoryChart>

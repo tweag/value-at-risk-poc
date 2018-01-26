@@ -49,7 +49,7 @@ export class SecurityRow extends Component {
         </td>
       </tr>,
       open
-        ? <ProfitLossChart id={ id } />
+        ? <tr key='chart'><td colSpan={8}><ProfitLossChart id={ id } /></td></tr>
         : null
     ]
   }
