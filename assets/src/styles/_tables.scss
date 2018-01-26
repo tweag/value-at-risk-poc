@@ -60,6 +60,13 @@ tr {
   }
 }
 
+tr.region{
+  background-color: $neutral-medium;
+  border-style: none;
+  border-left: 1px solid $neutral-medium;
+  border-right: 1px solid $neutral-medium;
+}
+
 tr.security {
   background-color: $primary-light;
   border-style: none;

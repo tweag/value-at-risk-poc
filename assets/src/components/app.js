@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Menu from './menu'
 import Nestable from './nestable'
 import BookTable from './book_table'
+import RegionTable from './region_table'
 import SecurityTable from './security_table'
 import { SecurityHeader } from './security_row'
 
@@ -24,6 +25,7 @@ class App extends Component {
                 topLevel
                 hierarchy={[
                   BookTable,
+                  RegionTable,
                   SecurityTable,
                 ]}
               />

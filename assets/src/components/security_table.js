@@ -16,23 +16,25 @@ class SecurityTable extends Component {
       return <tr><td>Fetching...</td></tr>
     }
 
-    return book.securities.map(this.renderRow)
+    return book.region.securities.map(this.renderRow)
   }
 }
 
 export default graphql(gql`
-  query ($bookName:String) {
+  query ($bookName:String, $regionName:String) {
     book(name:$bookName) {
-      securities {
-        id
-        symbol
-        price
-        quantity
-        costBasis
-        marketValue
-        profitLoss
-        valueAtRisk1
-        valueAtRisk5
+      region(name:$regionName) {
+        securities {
+          id
+          symbol
+          price
+          quantity
+          costBasis
+          marketValue
+          profitLoss
+          valueAtRisk1
+          valueAtRisk5
+        }
       }
     }
   }
