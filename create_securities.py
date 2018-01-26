@@ -7,10 +7,11 @@ import time
 
 BUSINESS_DAYS = 260
 
+
 def create_symbol():
     letters = string.ascii_uppercase
     symbol = ''
-    for i in range(randint(4,5)):
+    for i in range(randint(4, 5)):
         symbol = symbol + choice(letters)
 
     return symbol
@@ -36,7 +37,7 @@ def create_positions(symbol):
             'original_price': price,
         })
         price *= uniform(0.98, 1.03)
-        acquire_date += randint(day, day*10)
+        acquire_date += randint(day, day * 10)
 
     return positions
 
@@ -44,6 +45,7 @@ def create_positions(symbol):
 def create_date_days_ago(days_ago):
     now = time.time()
     return now - days_ago * 60 * 60 * 24
+
 
 def create_security(book):
     id = str(uuid4())
@@ -103,14 +105,17 @@ def calc_cost_basis(security_ids):
         for id in security_ids
     ])
 
+
 def calc_market_value(security_ids):
     return sum([
         SECURITIES[id]['price'] * SECURITIES[id]['quantity']
         for id in security_ids
     ])
 
+
 def calc_profit_loss(security_ids):
     return calc_market_value(security_ids) - calc_cost_basis(security_ids)
+
 
 def zip_pldays(security_ids):
     result = defaultdict(int)
@@ -120,10 +125,12 @@ def zip_pldays(security_ids):
             result[index] += plday['profit_loss_value'] * quantity
     return result.values()
 
+
 def calc_value_at_risk_securities(security_ids, percentage):
     pldays = zip_pldays(security_ids)
     value_at_risk = sorted(pldays)[int(len(pldays) * percentage)]
     return value_at_risk
+
 
 MANAGERS = ['JG', 'RH', 'PS', 'DM', 'TF', 'CR', 'TC', 'RZ', 'AB', 'GS', 'MN']
 TYPES = ['EM', 'CSArb']
