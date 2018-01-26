@@ -136,6 +136,6 @@ MANAGERS = ['JG', 'RH', 'PS', 'DM', 'TF', 'CR', 'TC', 'RZ', 'AB', 'GS', 'MN']
 TYPES = ['EM', 'CSArb']
 BOOKS = [(manager + '-' + type_) for manager in MANAGERS for type_ in TYPES]
 REGIONS = ['APAC', 'EMEA', 'LATAM', 'NAMER']
-SECURITIES = create_securities(300)
+SECURITIES = create_securities(100)
 BOOK_INDEX = create_index(SECURITIES, 'book')
 REGION_INDEX = create_index(SECURITIES, 'region')
