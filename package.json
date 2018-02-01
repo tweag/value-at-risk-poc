@@ -1,5 +1,8 @@
 {
   "name": "poc_server",
+  "engines": {
+    "node": "8.9.4"
+  },
   "scripts": {
     "build": "cd assets && yarn && yarn build",
     "postinstall": "yarn build",
