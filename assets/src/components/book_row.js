@@ -11,7 +11,7 @@ export class BookRow extends Component {
   }
 
   render () {
-    const { name, valueAtRisk1, valueAtRisk5, marketValue, costBasis, profitLoss } = this.props
+    const { name, valueAtRisk1, valueAtRisk5, marketValue, costBasis, profitLoss, regionName } = this.props
     const { open } = this.state
     const isGain = profitLoss > 0
 
@@ -33,7 +33,7 @@ export class BookRow extends Component {
         </td>
       </tr>,
       open
-        ? this.props.unnest({ bookName: name, key: 'unnest' })
+        ? this.props.unnest({ bookName: name, regionName: regionName, key: 'unnest' })
         : null
     ]
   }

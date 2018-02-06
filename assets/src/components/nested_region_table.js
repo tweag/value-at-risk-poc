@@ -6,7 +6,7 @@ import { RegionRow } from './region_row'
 import { SecurityHeader } from './security_row'
 
 
-class RegionTable extends Component {
+class NestedRegionTable extends Component {
   renderRow = (row) => {
     return (
       <RegionRow
@@ -18,25 +18,27 @@ class RegionTable extends Component {
   }
 
   render () {
-    const { data: { loading, regions } } = this.props
+    const { data: { loading, book } } = this.props
     if (loading) {
       return <tr><td>Fetching...</td></tr>
     }
 
-    return regions.map(this.renderRow)
+    return book.regions.map(this.renderRow)
   }
 }
 
 export default graphql(gql`
-  query {
-    regions {
-      name
-      costBasis
-      marketValue
-      profitLoss
-      valueAtRisk1
-      valueAtRisk5
+  query($bookName: String) {
+    book(name:$bookName) {
+      regions {
+        name
+        costBasis
+        marketValue
+        profitLoss
+        valueAtRisk1
+        valueAtRisk5
+      }
     }
   }
-`)(RegionTable)
+`)(NestedRegionTable)
 
