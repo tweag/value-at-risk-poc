@@ -4,19 +4,20 @@ import gql from 'graphql-tag'
 
 import { BookRow } from './book_row'
 
-class BookTable extends Component {
+export class BaseBookTable extends Component {
   renderRow = (row) => {
     return (
       <BookRow
         key={ row.name }
+        regionName={ this.props.regionName }
         unnest={ this.props.unnest }
-        className={ 'primary' }
+        className={ this.props.nested ? 'secondary' : 'primary' }
         { ...row } />
     )
   }
 
   render () {
-    const { data: { loading, books } } = this.props
+    const { loading, books } = this.props
     if (loading) {
       return <tr><td>Fetching...</td></tr>
     }
@@ -24,6 +25,10 @@ class BookTable extends Component {
     return books.map(this.renderRow)
   }
 }
+
+const BookTable = ({ data: { loading, books }, ...rest }) => (
+  <BaseBookTable loading={ loading } books={ books } { ...rest } />
+)
 
 export default graphql(gql`
   query {
@@ -37,4 +42,3 @@ export default graphql(gql`
     }
   }
 `)(BookTable)
-

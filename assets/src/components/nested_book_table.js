@@ -2,29 +2,11 @@ import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
-import { BookRow } from './book_row'
+import { BaseBookTable } from './book_table'
 
-class NestedBookTable extends Component {
-  renderRow = (row) => {
-    return (
-      <BookRow
-        key={ row.name }
-        regionName={ this.props.regionName }
-        unnest={ this.props.unnest }
-        className={ 'secondary' }
-        { ...row } />
-    )
-  }
-
-  render () {
-    const { data: { loading, region } } = this.props
-    if (loading) {
-      return <tr><td>Fetching...</td></tr>
-    }
-
-    return region.books.map(this.renderRow)
-  }
-}
+const NestedBookTable = ({ data: { loading, region }, ...rest }) => (
+  <BaseBookTable loading={ loading } books={ region && region.books } nested { ...rest } />
+)
 
 export default graphql(gql`
   query($regionName: String) {
@@ -40,4 +22,3 @@ export default graphql(gql`
     }
   }
 `)(NestedBookTable)
-

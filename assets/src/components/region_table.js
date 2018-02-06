@@ -3,22 +3,21 @@ import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 
 import { RegionRow } from './region_row'
-import { SecurityHeader } from './security_row'
 
-
-class RegionTable extends Component {
+export class BaseRegionTable extends Component {
   renderRow = (row) => {
     return (
       <RegionRow
         key={ row.name }
+        bookName={ this.props.bookName }
         unnest={ this.props.unnest }
-        className={ 'primary' }
+        className={ this.props.nested ? 'secondary' : 'primary' }
         { ...row } />
     )
   }
 
   render () {
-    const { data: { loading, regions } } = this.props
+    const { loading, regions } = this.props
     if (loading) {
       return <tr><td>Fetching...</td></tr>
     }
@@ -26,6 +25,10 @@ class RegionTable extends Component {
     return regions.map(this.renderRow)
   }
 }
+
+const RegionTable = ({ data: { loading, regions }, ...rest }) => (
+  <BaseRegionTable loading={ loading } regions={ regions } { ...rest } />
+)
 
 export default graphql(gql`
   query {
@@ -39,4 +42,3 @@ export default graphql(gql`
     }
   }
 `)(RegionTable)
-
