@@ -11,8 +11,8 @@ class RegionTable extends Component {
     return (
       <RegionRow
         key={ row.name }
-        bookName={ this.props.bookName }
         unnest={ this.props.unnest }
+        className={ 'primary' }
         { ...row } />
     )
   }

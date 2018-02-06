@@ -11,15 +11,18 @@ export class BookRow extends Component {
   }
 
   render () {
-    const { name, valueAtRisk1, valueAtRisk5, marketValue, costBasis, profitLoss, regionName } = this.props
+    const {
+      name, valueAtRisk1, valueAtRisk5, marketValue, costBasis, profitLoss, regionName, className
+    } = this.props
     const { open } = this.state
     const isGain = profitLoss > 0
+    const rowClassName = `book ${ className } ${ open ? 'open' : '' }`
 
     return [
       <tr
         key={ name }
         onClick={ this.toggleRow }
-        className={ open ? 'open book' : 'book' }
+        className={ rowClassName }
       >
         <td className='description'>BOOK: { name }</td>
         <td></td>

@@ -11,6 +11,7 @@ class NestedBookTable extends Component {
         key={ row.name }
         regionName={ this.props.regionName }
         unnest={ this.props.unnest }
+        className={ 'secondary' }
         { ...row } />
     )
   }

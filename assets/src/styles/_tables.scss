@@ -60,8 +60,8 @@ tr {
   }
 }
 
-tr.region,
-tr.book {
+tr.primary,
+tr.secondary {
   td {
     padding: .4em;
   }
@@ -71,7 +71,7 @@ tr.book {
   }
 }
 
-tr.region {
+tr.secondary {
   background-color: $secondary-light;
   border-style: none;
   border-left: 1px solid $neutral-medium;
@@ -85,14 +85,7 @@ tr.security {
   border-right: 1px solid $neutral-medium;
 }
 
-tr.book + tr.region {
-  border-top: 1px solid $neutral-medium;
-  td {
-    padding-top: 1em;
-  }
-}
-
-tr.region + tr.book {
+tr.primary + tr.secondary {
   border-top: 1px solid $neutral-medium;
   td {
     padding-top: 1em;
@@ -100,7 +93,7 @@ tr.region + tr.book {
 }
 
 table {
-  tr.region {
+  tr.secondary {
     .description {
       text-indent: 2em;
     }

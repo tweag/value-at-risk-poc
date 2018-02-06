@@ -10,6 +10,7 @@ class BookTable extends Component {
       <BookRow
         key={ row.name }
         unnest={ this.props.unnest }
+        className={ 'primary' }
         { ...row } />
     )
   }

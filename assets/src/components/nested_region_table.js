@@ -13,6 +13,7 @@ class NestedRegionTable extends Component {
         key={ row.name }
         bookName={ this.props.bookName }
         unnest={ this.props.unnest }
+        className={ 'secondary' }
         { ...row } />
     )
   }
