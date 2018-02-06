@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Toggle from 'react-toggle'
 
 import Menu from './menu'
 import Nestable from './nestable'
@@ -10,6 +11,7 @@ import SecurityTable from './security_table'
 import { SecurityHeader } from './security_row'
 
 import classes from '../styles/main.scss'
+import 'react-toggle/style.css'
 
 class App extends Component {
   constructor (props) {
@@ -35,8 +37,14 @@ class App extends Component {
         <Menu />
         <div className='content'>
           <h1>Client X</h1>
-          <div onClick={() => this.setState({ toggleHierarchy: !toggleHierarchy }) }>
-            Toggle it
+          <div className='toggle'>
+            <span>Book</span>
+            <Toggle
+              defaultChecked={ toggleHierarchy }
+              onChange={ () => this.setState({ toggleHierarchy: !toggleHierarchy }) }
+              icons={ false }
+            />
+            <span>Region</span>
           </div>
           <table className='securities'>
             <thead>

@@ -1,0 +1,25 @@
+.toggle {
+  width: 200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 5px;
+
+  span {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .react-toggle--checked {
+    .react-toggle-track {
+      background-color: #4D4D4D;
+    }
+
+    .react-toggle-thumb {
+      border-color: unset;
+    }
+  }
+
+  .react-toggle--checked:hover .react-toggle-track {
+    background-color: #000000 !important;
+  }
+}
