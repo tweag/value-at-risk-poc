@@ -12,22 +12,32 @@ import { SecurityHeader } from './security_row'
 import classes from '../styles/main.scss'
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = { toggleHierarchy: false }
+  }
+
   render () {
-    const hierarchy = [
+    const bookHierarchy = [
       BookTable,
       NestedRegionTable,
       SecurityTable,
     ]
-    const otherHierarchy = [
+    const regionHierarchy = [
       RegionTable,
       NestedBookTable,
       SecurityTable,
     ]
+    const { toggleHierarchy } = this.state
+    const hierarchy = toggleHierarchy ? regionHierarchy : bookHierarchy
     return (
       <div className='app'>
         <Menu />
         <div className='content'>
           <h1>Client X</h1>
+          <div onClick={() => this.setState({ toggleHierarchy: !toggleHierarchy }) }>
+            Toggle it
+          </div>
           <table className='securities'>
             <thead>
               <SecurityHeader />
@@ -35,7 +45,7 @@ class App extends Component {
             <tbody>
               <Nestable
                 topLevel
-                hierarchy={otherHierarchy}
+                hierarchy={hierarchy}
               />
             </tbody>
           </table>
