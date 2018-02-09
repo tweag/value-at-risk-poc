@@ -16,6 +16,11 @@ pip install -r requirements.txt
 python3 app.py
 ```
 
+To install client-side dependencies run:
+```
+yarn
+```
+
 To develop the client-side javascript, run:
 ```
 yarn serve
