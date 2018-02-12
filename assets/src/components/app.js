@@ -36,7 +36,9 @@ class App extends Component {
       <div className='app'>
         <Menu />
         <div className='content'>
+          <h1 className='title'>Value at Risk</h1>
           <div className='toggle'>
+            <label>View by:&nbsp;</label>
             <span>Book</span>
             <Toggle
               defaultChecked={ toggleHierarchy }

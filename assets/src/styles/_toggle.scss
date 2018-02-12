@@ -1,25 +1,48 @@
 .toggle {
-  width: 200px;
-  margin: 0 auto;
-  text-align: center;
-  padding: 5px;
+  display: flex;
+  width: 500px;
+  line-height: 1.25rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: lighten($neutral-dark,50%);
 
   span {
-    font-size: 1rem;
-    padding: 10px;
+    padding: 3px;
+  }
+
+  label {
+    text-transform: uppercase;
+    line-height: 1.7rem;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  .react-toggle {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .react-toggle-track {
+    background-color: $neutral-medium;
+  }
+
+  .react-toggle-thumb {
+    border-color: inherit;
   }
 
   .react-toggle--checked {
     .react-toggle-track {
-      background-color: #4D4D4D;
+      background-color: $neutral-medium;
+      border-color: $neutral-medium;
     }
 
     .react-toggle-thumb {
-      border-color: unset;
+      border-color: inherit;
     }
   }
 
+  .react-toggle:hover .react-toggle-track,
   .react-toggle--checked:hover .react-toggle-track {
-    background-color: #000000 !important;
+    background-color: $blue !important;
   }
 }
