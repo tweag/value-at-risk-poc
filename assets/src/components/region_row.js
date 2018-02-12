@@ -27,12 +27,12 @@ export class RegionRow extends Component {
         <td className='description'>REGION: { name }</td>
         <td></td>
         <td></td>
-        <td>{ `\$${valueAtRisk1.toFixed(2)}` }</td>
-        <td>{ `\$${valueAtRisk5.toFixed(2)}` }</td>
-        <td>{ `\$${costBasis.toFixed(2)}` }</td>
-        <td>{ `\$${marketValue.toFixed(2)}` }</td>
+        <td>{ `${valueAtRisk1.toFixed(2)}` }</td>
+        <td>{ `${valueAtRisk5.toFixed(2)}` }</td>
+        <td>{ `${costBasis.toFixed(2)}` }</td>
+        <td>{ `${marketValue.toFixed(2)}` }</td>
         <td className={ isGain ? 'gain' : 'loss'}>
-          { `\$${profitLoss.toFixed(2)}` }
+          { `${profitLoss.toFixed(2)}` }
         </td>
       </tr>,
       open
