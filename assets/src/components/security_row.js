@@ -38,14 +38,14 @@ export class SecurityRow extends Component {
         className={ open ? 'open security' : 'security' }
       >
         <td className='description'>{ symbol }</td>
-        <td>{ `\$${price.toFixed(2)}` }</td>
+        <td>{ `${price.toFixed(2)}` }</td>
         <td>{ `${quantity.toFixed(3)}` }</td>
-        <td>{ `\$${valueAtRisk1.toFixed(2)}` }</td>
-        <td>{ `\$${valueAtRisk5.toFixed(2)}` }</td>
-        <td>{ `\$${costBasis.toFixed(2)}` }</td>
-        <td>{ `\$${marketValue.toFixed(2)}` }</td>
+        <td>{ `${valueAtRisk1.toFixed(2)}` }</td>
+        <td>{ `${valueAtRisk5.toFixed(2)}` }</td>
+        <td>{ `${costBasis.toFixed(2)}` }</td>
+        <td>{ `${marketValue.toFixed(2)}` }</td>
         <td className={ isGain ? 'gain' : 'loss'}>
-          { `\$${profitLoss.toFixed(2)}` }
+          { `${profitLoss.toFixed(2)}` }
         </td>
       </tr>,
       open
