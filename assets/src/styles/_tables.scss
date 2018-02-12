@@ -1,6 +1,6 @@
 table {
   border: 1px solid $neutral-light;
-  font-size: .8rem;
+  font-size: .85rem;
   line-height: 1.4em;
   text-align:right;
   width: 100%;
@@ -37,6 +37,7 @@ table {
 
 tr {
   // 7 columns
+
   th {
     width: 10%;
   }
@@ -60,6 +61,15 @@ tr {
   }
 }
 
+tbody tr {
+
+  &:hover {
+    background: #f9f9f9;
+    cursor: pointer;
+  }
+}
+
+
 tr.primary,
 tr.secondary {
   td {
@@ -76,6 +86,10 @@ tr.secondary {
   border-style: none;
   border-left: 1px solid $neutral-medium;
   border-right: 1px solid $neutral-medium;
+
+  &:hover {
+    background-color: darken($secondary-light, 5%)
+  }
 }
 
 tr.security {
@@ -83,6 +97,10 @@ tr.security {
   border-style: none;
   border-left: 1px solid $neutral-medium;
   border-right: 1px solid $neutral-medium;
+
+  &:hover {
+    background-color: darken($primary-light, 5%)
+  }
 }
 
 tr.primary + tr.secondary {
