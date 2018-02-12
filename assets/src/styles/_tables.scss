@@ -1,5 +1,4 @@
 table {
-  // border-right: 1px solid $neutral-light;
   font-size: .85rem;
   line-height: 1.4em;
   text-align:right;
@@ -7,7 +6,6 @@ table {
   border-collapse: collapse;
 
   thead {
-    // background-color: $neutral-dark;
     color: lighten($neutral-dark,50%);
     font-weight: 200;
     font-size: 0.9rem;
@@ -77,7 +75,6 @@ tbody tr {
   }
 }
 
-
 tr.primary,
 tr.secondary {
   td {
@@ -86,28 +83,6 @@ tr.secondary {
 
   &.open {
     padding: 1em .4em .4em;
-  }
-}
-
-tr.secondary {
-  // background-color: $secondary-light;
-  border-style: none;
-  // border-left: 1px solid $neutral-medium;
-  // border-right: 1px solid $neutral-medium;
-
-  &:hover {
-    // background-color: darken($secondary-light, 5%)
-  }
-}
-
-tr.security {
-  // background-color: $primary-light;
-  border-style: none;
-  // border-left: 1px solid $neutral-medium;
-  // border-right: 1px solid $neutral-medium;
-
-  &:hover {
-    // background-color: darken($primary-light, 5%)
   }
 }
 
