@@ -18,8 +18,9 @@ const TheDate = () => {
 
 const Logo = () => {
   return (
-    <div className='logo'>
-      <span>&#128200;</span>
+    <div className='brand'>
+      <span className='logo'>&#128200;</span>
+      <span>Client X</span>
     </div>
   )
 }

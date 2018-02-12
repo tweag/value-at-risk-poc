@@ -36,7 +36,6 @@ class App extends Component {
       <div className='app'>
         <Menu />
         <div className='content'>
-          <h1>Client X</h1>
           <div className='toggle'>
             <span>Book</span>
             <Toggle
@@ -57,6 +56,9 @@ class App extends Component {
               />
             </tbody>
           </table>
+          <div className='histogram'>
+            [histogram_placeholder]
+          </div>
         </div>
       </div>
     )
